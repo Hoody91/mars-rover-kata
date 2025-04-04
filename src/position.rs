@@ -1,26 +1,13 @@
-#[derive(Debug, Default, Clone)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
+/// Represents the position of the rover on the Mars grid.
 pub(crate) struct Position {
-    x: i32,
-    y: i32,
+    pub(crate) x: i32,
+    pub(crate) y: i32,
 }
 
 impl Position {
+    /// Creates a new `Position` with the given x and y coordinates.
     pub(crate) fn new(x: i32, y: i32) -> Self {
         Position { x, y }
-    }
-
-    pub(crate) fn x(&self) -> i32 {
-        self.x
-    }
-    pub(crate) fn y(&self) -> i32 {
-        self.y
-    }
-
-    pub(crate) fn set_x(&mut self, x: i32) {
-        self.x = x;
-    }
-
-    pub(crate) fn set_y(&mut self, y: i32) {
-        self.y = y;
     }
 }

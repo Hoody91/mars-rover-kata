@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, Default, PartialEq)]
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub(crate) enum Direction {
     #[default]
     North,
@@ -23,6 +23,9 @@ impl TryFrom<&str> for Direction {
 }
 
 impl Direction {
+    /// Returns the delta (x, y) for the direction.
+    /// North is (0, 1), East is (1, 0), South is (0, -1), West is (-1, 0).
+    /// This is used to calculate the new position of the rover when it moves forward.
     pub(crate) fn get_delta(&self) -> (i32, i32) {
         match self {
             Direction::North => (0, 1),
@@ -32,6 +35,8 @@ impl Direction {
         }
     }
 
+    /// Returns the direction after turning left.
+    /// North -> West, East -> North, South -> East, West -> South
     pub(crate) fn turn_left(&self) -> Direction {
         match self {
             Direction::North => Direction::West,
@@ -41,6 +46,8 @@ impl Direction {
         }
     }
 
+    /// Returns the direction after turning right.
+    /// North -> East, East -> South, South -> West, West -> North
     pub(crate) fn turn_right(&self) -> Direction {
         match self {
             Direction::North => Direction::East,
