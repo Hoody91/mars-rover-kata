@@ -99,3 +99,134 @@ fn mars_rover_runs_commands(initial_state: &str, commands: &str, expected_state:
         "State of the rover did not match after executing commands"
     );
 }
+
+#[test]
+fn mars_rover_invalid_initial_state_format() {
+    let result = MarsRover::new("0:0");
+    assert!(result.is_err());
+    assert_eq!(result.unwrap_err(), "Invalid initial state");
+}
+
+#[test]
+fn mars_rover_invalid_x_coordinate() {
+    let result = MarsRover::new("abc:0:N");
+    assert!(result.is_err());
+    assert!(result.unwrap_err().contains("Invalid x coordinate"));
+}
+
+#[test]
+fn mars_rover_invalid_y_coordinate() {
+    let result = MarsRover::new("0:abc:N");
+    assert!(result.is_err());
+    assert!(result.unwrap_err().contains("Invalid y coordinate"));
+}
+
+#[test]
+fn mars_rover_invalid_direction() {
+    let result = MarsRover::new("0:0:X");
+    assert!(result.is_err());
+    assert!(result.unwrap_err().contains("Invalid direction"));
+}
+
+#[test]
+fn mars_rover_trims_whitespace() {
+    let rover = MarsRover::new(" 1:2:N ").unwrap();
+    assert_eq!(rover.to_string(), "1:2:N");
+}
+
+#[test_case('M', true; "Valid move command")]
+#[test_case('L', true; "Valid left turn command")]
+#[test_case('R', true; "Valid right turn command")]
+#[test_case('X', false; "Invalid command")]
+fn mars_rover_command_validation(command: char, should_succeed: bool) {
+    let mut rover = MarsRover::new("0:0:N").unwrap();
+    let result = rover.command(command);
+    assert_eq!(result.is_ok(), should_succeed);
+}
+
+#[test_case("0:0:N", "MRMLLM", "0:1:W"; "Complex sequence 1")]
+#[test_case("5:5:E", "MMLMRMMRRMML", "7:6:S"; "Complex sequence 2")]
+#[test_case("3:3:S", "MMMLMMMRMMMML", "6:-4:E"; "Complex sequence 3")]
+fn mars_rover_complex_commands(initial_state: &str, commands: &str, expected_state: &str) {
+    let mut rover = MarsRover::new(initial_state).unwrap();
+    rover.execute_commands(commands).unwrap();
+    assert_eq!(
+        rover.to_string(),
+        expected_state,
+        "State of the rover did not match after executing commands"
+    );
+}
+
+#[test]
+fn mars_rover_invalid_command() {
+    let mut rover = MarsRover::new("0:0:N").unwrap();
+    let result = rover.execute_commands("MMXMM");
+    assert!(result.is_err());
+    assert!(result.unwrap_err().contains("Invalid command"));
+}
+#[test]
+fn mars_rover_full_rotation_left() {
+    let mut rover = MarsRover::new("0:0:N").unwrap();
+    rover.execute_commands("LLLL").unwrap();
+    assert_eq!(
+        rover.to_string(),
+        "0:0:N",
+        "Rover should be back at starting direction after 4 left turns"
+    );
+}
+
+#[test]
+fn mars_rover_full_rotation_right() {
+    let mut rover = MarsRover::new("0:0:N").unwrap();
+    rover.execute_commands("RRRR").unwrap();
+    assert_eq!(
+        rover.to_string(),
+        "0:0:N",
+        "Rover should be back at starting direction after 4 right turns"
+    );
+}
+
+#[test]
+fn mars_rover_square_pattern() {
+    let mut rover = MarsRover::new("0:0:N").unwrap();
+    rover.execute_commands("MMRMMLMMRMMLMMRMM").unwrap(); // Move in a 2x2 square
+    assert_eq!(
+        rover.to_string(),
+        "6:6:E",
+        "Rover should complete a square and return to starting position"
+    );
+}
+
+#[test]
+fn mars_rover_return_to_start() {
+    let mut rover = MarsRover::new("0:0:N").unwrap();
+    rover.execute_commands("MMMMLLMMMM").unwrap();
+    assert_eq!(
+        rover.to_string(),
+        "0:0:S",
+        "Rover should return to starting position but face opposite direction"
+    );
+}
+
+#[test]
+fn mars_rover_mixed_rotations() {
+    let mut rover = MarsRover::new("0:0:N").unwrap();
+    rover.execute_commands("RLRLRLRL").unwrap();
+    assert_eq!(
+        rover.to_string(),
+        "0:0:N",
+        "Rover direction should be unchanged after alternating turns"
+    );
+}
+
+#[test_case("1000000:1000000:N", "MMMM", "1000000:1000004:N"; "Large positive coordinates")]
+#[test_case("-1000000:-1000000:S", "MMMM", "-1000000:-1000004:S"; "Large negative coordinates")]
+fn mars_rover_large_coordinates(initial_state: &str, commands: &str, expected_state: &str) {
+    let mut rover = MarsRover::new(initial_state).unwrap();
+    rover.execute_commands(commands).unwrap();
+    assert_eq!(
+        rover.to_string(),
+        expected_state,
+        "State of the rover did not match with large coordinates"
+    );
+}
