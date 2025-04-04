@@ -1,28 +1,28 @@
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub(crate) enum Direction {
+    #[default]
     North,
     East,
     South,
     West,
 }
 
-impl Default for Direction {
-    fn default() -> Self {
-        Direction::North
-    }
-}
+impl TryFrom<&str> for Direction {
+    type Error = String;
 
-impl Direction {
-    pub(crate) fn from_str(s: &str) -> Option<Self> {
-        match s.to_lowercase().as_str() {
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        match value.to_lowercase().as_str() {
             "north" | "n" => Some(Direction::North),
             "east" | "e" => Some(Direction::East),
             "south" | "s" => Some(Direction::South),
             "west" | "w" => Some(Direction::West),
             _ => None,
         }
+        .ok_or_else(|| format!("Invalid direction '{}'", value))
     }
+}
 
+impl Direction {
     pub(crate) fn get_delta(&self) -> (i32, i32) {
         match self {
             Direction::North => (0, 1),
