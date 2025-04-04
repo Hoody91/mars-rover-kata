@@ -1,6 +1,30 @@
 use crate::{direction::Direction, position::Position};
 
 #[derive(Debug, Default, Clone)]
+/// Represents the Mars Rover.
+/// The rover can move forward, turn left, or turn right.
+/// ## Examples
+/// ```
+/// use mars_rover::MarsRover;
+/// let mut rover = MarsRover::new("3:4:N").unwrap();
+/// assert_eq!(rover.to_string(), "3:4:N");
+/// rover.move_forward();
+/// assert_eq!(rover.to_string(), "3:5:N");
+/// rover.turn_left();
+/// assert_eq!(rover.to_string(), "3:5:W");
+/// rover.move_forward();
+/// assert_eq!(rover.to_string(), "2:5:W");
+/// rover.turn_right();
+/// assert_eq!(rover.to_string(), "2:5:N");
+/// rover.execute_commands("MMRMM");
+/// assert_eq!(rover.to_string(), "4:7:E");
+/// rover.command('L').unwrap();
+/// assert_eq!(rover.to_string(), "4:7:N");
+/// rover.command('M').unwrap();
+/// assert_eq!(rover.to_string(), "4:8:N");
+/// rover.command('R').unwrap();
+/// assert_eq!(rover.to_string(), "4:8:E");
+/// ```
 pub struct MarsRover {
     direction: Direction,
     position: Position,
