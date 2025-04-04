@@ -3,7 +3,6 @@ use mars_rover::MarsRover;
 #[test]
 fn mars_rover_default() {
     let rover = MarsRover::default();
-    // Assuming default Direction is North and default Position is (0,0)
     assert_eq!(rover.to_string(), "0:0:N");
 }
 
