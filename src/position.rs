@@ -1,4 +1,4 @@
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 pub(crate) struct Position {
     x: i32,
     y: i32,

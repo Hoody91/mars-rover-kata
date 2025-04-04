@@ -1,6 +1,6 @@
 use crate::{direction::Direction, position::Position};
 
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 pub struct MarsRover {
     direction: Direction,
     position: Position,
