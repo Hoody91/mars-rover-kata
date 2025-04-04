@@ -1,18 +1,9 @@
 use crate::{direction::Direction, position::Position};
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct MarsRover {
     direction: Direction,
     position: Position,
-}
-
-impl Default for MarsRover {
-    fn default() -> Self {
-        MarsRover {
-            direction: Direction::North,
-            position: Position::default(),
-        }
-    }
 }
 
 impl MarsRover {

@@ -92,7 +92,7 @@ fn mars_rover_move_and_turns_right(initial_state: &str, expected_state: &str) {
 
 fn mars_rover_runs_commands(initial_state: &str, commands: &str, expected_state: &str) {
     let mut rover = MarsRover::new(initial_state).unwrap();
-    rover.execute_commands(commands);
+    rover.execute_commands(commands).unwrap();
     assert_eq!(
         rover.to_string(),
         expected_state,

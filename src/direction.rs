@@ -6,6 +6,12 @@ pub(crate) enum Direction {
     West,
 }
 
+impl Default for Direction {
+    fn default() -> Self {
+        Direction::North
+    }
+}
+
 impl Direction {
     pub(crate) fn from_str(s: &str) -> Option<Self> {
         match s.to_lowercase().as_str() {
