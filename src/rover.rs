@@ -79,3 +79,18 @@ impl std::fmt::Display for MarsRover {
         )
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_mars_rover_creation() {
+        let input = "3:4:N"; // Example valid input
+        let rover = MarsRover::new(input).expect("MarsRover should be created successfully");
+
+        assert_eq!(rover.position.x(), 3);
+        assert_eq!(rover.position.y(), 4);
+        assert_eq!(rover.direction, Direction::North); // Assuming 'N' corresponds to North
+    }
+}
