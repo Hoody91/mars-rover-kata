@@ -20,8 +20,7 @@ impl MarsRover {
             .parse()
             .map_err(|_| format!("Invalid y coordinate '{}'", parts[1]))?;
 
-        let direction = Direction::try_from(parts[2])
-            .map_err(|_| format!("Invalid direction '{}'", parts[2]))?;
+        let direction = Direction::try_from(parts[2])?;
 
         Ok(MarsRover {
             direction,
