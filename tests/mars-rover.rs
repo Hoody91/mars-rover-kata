@@ -1,27 +1,6 @@
 use ::mars_rover::MarsRover;
 use test_case::test_case;
 
-#[test]
-fn test_mars_rover_creation_success() {
-    // This will specifically test the Ok branch in the new() function
-    let result = MarsRover::new("10:20:N");
-    assert!(result.is_ok());
-
-    let rover = result.unwrap();
-    assert_eq!(rover.to_string(), "10:20:N");
-}
-
-#[test]
-fn test_mars_rover_all_directions() {
-    // Test creation with each possible direction
-    for direction in ["N", "E", "S", "W"] {
-        let initial_state = format!("5:5:{}", direction);
-        let result = MarsRover::new(&initial_state);
-        assert!(result.is_ok());
-        assert_eq!(result.unwrap().to_string(), initial_state);
-    }
-}
-
 #[test_case("0:0:N", "0:0:N"; "Returns the initial state")]
 #[test_case("1:-1:W", "1:-1:W"; "Returns a second different initial state")]
 #[test_case("5:5:S", "5:5:S"; "Returns a third different initial state")]
