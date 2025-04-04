@@ -6,22 +6,32 @@ use crate::{direction::Direction, position::Position};
 /// ## Examples
 /// ```
 /// use mars_rover::MarsRover;
+///
 /// let mut rover = MarsRover::new("3:4:N").unwrap();
+///
 /// assert_eq!(rover.to_string(), "3:4:N");
+///
 /// rover.move_forward();
 /// assert_eq!(rover.to_string(), "3:5:N");
+///
 /// rover.turn_left();
 /// assert_eq!(rover.to_string(), "3:5:W");
+///
 /// rover.move_forward();
 /// assert_eq!(rover.to_string(), "2:5:W");
+///
 /// rover.turn_right();
 /// assert_eq!(rover.to_string(), "2:5:N");
+///
 /// rover.execute_commands("MMRMM");
 /// assert_eq!(rover.to_string(), "4:7:E");
+///
 /// rover.command('L').unwrap();
 /// assert_eq!(rover.to_string(), "4:7:N");
+///
 /// rover.command('M').unwrap();
 /// assert_eq!(rover.to_string(), "4:8:N");
+///
 /// rover.command('R').unwrap();
 /// assert_eq!(rover.to_string(), "4:8:E");
 /// ```
@@ -45,7 +55,9 @@ impl MarsRover {
     /// ## Examples
     /// ```
     /// use mars_rover::MarsRover;
+    ///
     /// let rover = MarsRover::new("3:4:N").unwrap();
+    ///
     /// assert_eq!(rover.to_string(), "3:4:N");
     /// ```
     pub fn new(initial_state: &str) -> Result<Self, String> {
@@ -80,8 +92,11 @@ impl MarsRover {
     /// ## Examples
     /// ```
     /// use mars_rover::MarsRover;
+    ///
     /// let mut rover = MarsRover::new("0:0:N").unwrap();
+    ///
     /// rover.move_forward();
+    ///
     /// assert_eq!(rover.to_string(), "0:1:N");
     /// ```
     pub fn move_forward(&mut self) {
@@ -99,8 +114,11 @@ impl MarsRover {
     /// ## Examples
     /// ```
     /// use mars_rover::MarsRover;
+    ///
     /// let mut rover = MarsRover::new("0:0:N").unwrap();
+    ///
     /// rover.turn_left();
+    ///
     /// assert_eq!(rover.to_string(), "0:0:W");
     /// ```
     pub fn turn_left(&mut self) {
@@ -117,8 +135,11 @@ impl MarsRover {
     /// ## Examples
     /// ```
     /// use mars_rover::MarsRover;
+    ///
     /// let mut rover = MarsRover::new("0:0:N").unwrap();
+    ///
     /// rover.turn_right();
+    ///
     /// assert_eq!(rover.to_string(), "0:0:E");
     /// ```
     pub fn turn_right(&mut self) {
@@ -133,11 +154,15 @@ impl MarsRover {
     /// ## Examples
     /// ```
     /// use mars_rover::MarsRover;
+    ///
     /// let mut rover = MarsRover::new("0:0:N").unwrap();
+    ///
     /// rover.command('M').unwrap();
     /// assert_eq!(rover.to_string(), "0:1:N");
+    ///
     /// rover.command('L').unwrap();
     /// assert_eq!(rover.to_string(), "0:1:W");
+    ///
     /// rover.command('M').unwrap();
     /// assert_eq!(rover.to_string(), "-1:1:W");
     /// ```
@@ -169,8 +194,11 @@ impl MarsRover {
     /// ## Examples
     /// ```
     /// use mars_rover::MarsRover;
+    ///
     /// let mut rover = MarsRover::new("0:0:N").unwrap();
+    ///
     /// rover.execute_commands("MMRMM").unwrap();
+    ///
     /// assert_eq!(rover.to_string(), "2:2:E");
     /// ```
     /// ## Errors
