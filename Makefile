@@ -1,6 +1,6 @@
 .PHONY: all check format lint test test-coverage build test-coverage
 
-all: check format lint test-coverage build 
+all: check format lint test test-coverage build 
 
 check:
 	cargo check
